@@ -98,7 +98,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comic = Post::findOrFail($id);
+        $comic -> delete();
+        return redirect()-> route('admin.posts.show');
     }
 
     private function generatePostSlugFromTitle($title) {
