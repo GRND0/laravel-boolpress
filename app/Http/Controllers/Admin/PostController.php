@@ -42,10 +42,7 @@ class PostController extends Controller
         $data = $request->all();
         $post = new Post();
         $post->fill($data);
-
-
-
-$post->slug = $this->generatePostSlugFromTitle($post->title);
+        $post->slug = $this->generatePostSlugFromTitle($post->title);
         $post->save();
         return redirect()->route('admin.posts.show', ['post'=> $post ->id]);
     }
@@ -71,7 +68,7 @@ $post->slug = $this->generatePostSlugFromTitle($post->title);
     public function edit($id)
     {   
         $post = Post::findOrFail($id);
-       return view('admin.posts.edit');
+       return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -83,7 +80,14 @@ $post->slug = $this->generatePostSlugFromTitle($post->title);
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->getValidationRules());
+        $data = $request->all();
+        $post = Post::findOrFail($id);
+        $post ->fill($data);
+        $post->slug = $this->generatePostSlugFromTitle($post->title);
+        $post->save();
+
+        return redirect()->route('admin.posts.show', ['post' => $post->id ]);
     }
 
     /**
