@@ -59,11 +59,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-
         $category = $post->category;
-        $categoriesPosts = $category->posts;
-
-        return view('admin.posts.show', compact('post'));
+        // $categoriesPosts = $category->posts;
+        return view('admin.posts.show', compact('post','category'));
     }
 
     /**
@@ -107,9 +105,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $comic = Post::findOrFail($id);
-        $comic -> delete();
-        return redirect()-> route('admin.posts.show');
+        $post = Post::findOrFail($id);
+        $post -> delete();
+        return redirect()-> route('admin.posts.show', ['post' => $post->id]);
     }
 
     private function generatePostSlugFromTitle($title) {
@@ -131,7 +129,7 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:30000',
-            'category_id' => 'nullable|exists:categoris,id'
+            'category_id' => 'nullable|exists:categories,id'
         ];
     }
 }
