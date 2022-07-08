@@ -50,7 +50,10 @@ class PostController extends Controller
         $post->slug = $this->generatePostSlugFromTitle($post->title);
         $post->save();
 
-        $post->tags()->sync($data['tags']);
+        if(isset($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } 
+        
         return redirect()->route('admin.posts.show', ['post'=> $post ->id]);
 
 
@@ -104,7 +107,11 @@ class PostController extends Controller
         $data['slug'] = Post::generatePostSlugFromTitle($data['title']);
         $post->update($data);
 
+        if(isset($data['tags'])){
         $post->tags()->sync($data['tags']);
+    } else {
+        $post->tags()->sync([]); 
+    }
 
         return redirect()->route('admin.posts.show', ['post' => $post->id ]);
     }
@@ -118,6 +125,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        $post->tags()->sync([]);
         $post -> delete();
         return redirect()-> route('admin.posts.show', ['post' => $post->id]);
     }

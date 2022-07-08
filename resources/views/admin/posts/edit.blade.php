@@ -35,8 +35,8 @@
             <h4>Tags</h4>
             @foreach ($tags as $tag)
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag-{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : '' }}>
-              <label class="form-check-label" for="tag-{{$tag->id}}"   >
+              <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag-{{$tag->id}}" {{($post->tags->contains($tag) || in_array($tag->id, old('tags', []))) ? 'checked' : '' }}>
+              <label class="form-check-label" for="tag-{{$tag->id}}">
                 {{$tag->name}}
               </label>
             </div>
