@@ -80,8 +80,9 @@ class PostController extends Controller
     {   
         $post = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
-       return view('admin.posts.edit', compact('post', 'categories'));
+       return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -96,9 +97,14 @@ class PostController extends Controller
         $request->validate($this->getValidationRules());
         $data = $request->all();
         $post = Post::findOrFail($id);
-        $post ->fill($data);
-        $post->slug = $this->generatePostSlugFromTitle($post->title);
-        $post->save();
+        // $post ->fill($data);
+        // $post->slug = $this->generatePostSlugFromTitle($post->title);
+        // $post->save();
+
+        $data['slug'] = Post::generatePostSlugFromTitle($data['title']);
+        $post->update($data);
+
+        $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.show', ['post' => $post->id ]);
     }

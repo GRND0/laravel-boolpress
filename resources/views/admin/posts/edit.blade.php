@@ -29,6 +29,21 @@
               
           @endforeach
         </div>
+
+
+        <div>
+            <h4>Tags</h4>
+            @foreach ($tags as $tag)
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag-{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : '' }}>
+              <label class="form-check-label" for="tag-{{$tag->id}}"   >
+                {{$tag->name}}
+              </label>
+            </div>
+            @endforeach
+        </div>
+
+
     <div class="form-group">
         <label for="content">Contenuto</label>
         <textarea type="text" class="form-control" id="content" name="content" rows="10" value="{{ old('content') ? old('content') : $post->content }}"> 
