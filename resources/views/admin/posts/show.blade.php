@@ -5,6 +5,17 @@
     <p>Slug : {{$post->slug}}</p>
     <p>{{$post->content}}</p>
 
+    <p> <strong> Tags: </strong>
+        @forelse ($post->tags as $tag)
+        {{ $tag->name }} {{$loop->last ? '' : ','}}
+            
+        @empty
+            nessuno
+        @endforelse
+    
+    
+    </p>
+
    <a class="btn btn-primary" href="{{route('admin.posts.edit', ['post' => $post->id])}}" >Modifica</a>
 
 
