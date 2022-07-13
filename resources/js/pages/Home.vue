@@ -1,25 +1,22 @@
 <template>
-    <div>
-        <router-view>
-
-        </router-view>
-        
+    <div class="container" >
+        <h2>Pagina home </h2>
     </div>
 
 </template>
 
 <script>
-
-
 export default {
-   name: 'App',
-
-};
+    name: "Home"
+}
 
 
 </script>
 
+
+
 <style>
+
 
 
 </style>
