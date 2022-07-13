@@ -2297,17 +2297,18 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "container"
-  }, [_c("h2", [_vm._v("404 NON TROVATO ")])]);
-}];
+  }, [_c("h2", [_vm._v("404 NON TROVATO ")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: {
+        name: "home"
+      }
+    }
+  }, [_vm._v("Torna in Home")])], 1);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 
