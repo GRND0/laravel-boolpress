@@ -10,11 +10,11 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['category']);
+        $posts = Post::with(['category'])->get();
 
         return response()->json([
             'success' => true , 
-            'results' => $posts 
+            'results' => $posts         
         ]);
     }
 }
