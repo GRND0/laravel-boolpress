@@ -8,7 +8,9 @@ import Home from "./pages/Home.vue";
 import About from "./pages/About.vue";
 import Who from "./pages/Who.vue";
 import Blog from "./pages/Blog.vue";
-import NotFound from "./pages/NotFound.vue"
+import NotFound from "./pages/NotFound.vue";
+import SinglePost from "./pages/SinglePost.vue";
+// import { component } from 'vue/types/umd';
 
 const router = new VueRouter({
     mode: "history",
@@ -36,6 +38,11 @@ const router = new VueRouter({
         {
             path: "/*",
             component: NotFound
+        },
+        {
+            path: "/blog/:slug",
+            name: "single-post",
+            component: SinglePost
         }
     ]
 });
