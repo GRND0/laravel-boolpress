@@ -2180,7 +2180,7 @@ var render = function render() {
       staticClass: "card mb-3"
     }, [_c("div", {
       staticClass: "card-body"
-    }, [_c("h5", {
+    }, [_c("p", [_vm._v("Categoria: " + _vm._s(post.category ? post.category.name : "nessuna"))]), _vm._v(" "), _c("h5", {
       staticClass: "card-title"
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"

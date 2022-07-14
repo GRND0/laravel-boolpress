@@ -6,6 +6,7 @@
                 <div class="card mb-3">
                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                     <div class="card-body">
+                        <p>Categoria: {{post.category ? post.category.name : 'nessuna'}}</p>
                         <h5 class="card-title">{{ post.title }}</h5>
                         <p class="card-text">{{ troncateText(post.content, 50) }}</p>
                     </div>
