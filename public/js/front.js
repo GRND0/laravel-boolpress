@@ -2254,7 +2254,19 @@ var render = function render() {
     staticClass: "card-title"
   }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
-  }, [_vm._v(_vm._s(_vm.troncateText(50)))])])]);
+  }, [_vm._v(_vm._s(_vm.troncateText(50)))]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("router-link", {
+    staticClass: "card-link",
+    attrs: {
+      to: {
+        name: "single-post",
+        params: {
+          slug: _vm.post.slug
+        }
+      }
+    }
+  }, [_vm._v("Leggi")])], 1)])]);
 };
 
 var staticRenderFns = [];

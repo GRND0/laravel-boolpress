@@ -3,7 +3,7 @@
         <h1>{{post.title}}</h1>
         <p> Categoria: {{categoryName}}</p>
         <div>
-            <span v-for="tag in post.tags" :key="tag.id"  >
+            <span v-for="tag in post.tags" :key="tag.id">
                 {{tag.name}}
             </span>
         </div>
