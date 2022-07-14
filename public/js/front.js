@@ -2437,7 +2437,11 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v(" Categoria: " + _vm._s(_vm.categoryName))]), _vm._v(" "), _c("p", [_vm._v("\r\n            " + _vm._s(_vm.post.content) + "\r\n        ")])]);
+  }, [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v(" Categoria: " + _vm._s(_vm.categoryName))]), _vm._v(" "), _c("div", _vm._l(_vm.post.tags, function (tag) {
+    return _c("span", {
+      key: tag.id
+    }, [_vm._v("\r\n                " + _vm._s(tag.name) + "\r\n            ")]);
+  }), 0), _vm._v(" "), _c("p", [_vm._v("\r\n            " + _vm._s(_vm.post.content) + "\r\n        ")])]);
 };
 
 var staticRenderFns = [];
