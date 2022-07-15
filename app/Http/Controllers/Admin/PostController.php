@@ -31,9 +31,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $tags= Tag::all();
+        $tags = Tag::all();
         return view('admin.posts.create', compact('categories', 'tags'));
-
     }
 
     /**
@@ -44,24 +43,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->getValidationRules()); 
+        $request->validate($this->getValidationRules());
 
         $data = $request->all();
 
-        $image_path = Storage::put('post_covers', $data['image']);
+        if (isset($data['image'])) {
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
+
 
         $post = new Post();
         $post->fill($data);
         $post->slug = $this->generatePostSlugFromTitle($post->title);
         $post->save();
 
-        if(isset($data['tags'])) {
+        if (isset($data['tags'])) {
             $post->tags()->sync($data['tags']);
-        } 
-        
-        return redirect()->route('admin.posts.show', ['post'=> $post ->id]);
+        }
 
-
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -75,7 +76,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $category = $post->category;
         // $categoriesPosts = $category->posts;
-        return view('admin.posts.show', compact('post','category'));
+        return view('admin.posts.show', compact('post', 'category'));
     }
 
     /**
@@ -85,12 +86,12 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $post = Post::findOrFail($id);
         $categories = Category::all();
         $tags = Tag::all();
 
-       return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -112,13 +113,13 @@ class PostController extends Controller
         $data['slug'] = Post::generatePostSlugFromTitle($data['title']);
         $post->update($data);
 
-        if(isset($data['tags'])){
-        $post->tags()->sync($data['tags']);
-    } else {
-        $post->tags()->sync([]); 
-    }
+        if (isset($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
 
-        return redirect()->route('admin.posts.show', ['post' => $post->id ]);
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -131,19 +132,20 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->tags()->sync([]);
-        $post -> delete();
-        return redirect()-> route('admin.posts.show', ['post' => $post->id]);
+        $post->delete();
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
-    private function generatePostSlugFromTitle($title) {
+    private function generatePostSlugFromTitle($title)
+    {
         $base_slug = Str::slug($title, '-');
         $slug = $base_slug;
         $count = 1;
         $post_found = Post::where('slug', '=', $slug)->first();
-        while($post_found) {
-         $slug = $base_slug . '-' . $count;
-         $post_found = Post::where('slug', '=', $slug)->first();
-         $count++;
+        while ($post_found) {
+            $slug = $base_slug . '-' . $count;
+            $post_found = Post::where('slug', '=', $slug)->first();
+            $count++;
         }
         return $slug;
     }
@@ -155,7 +157,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|max:30000',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'image' => 'image|max:512'
         ];
     }
 }
